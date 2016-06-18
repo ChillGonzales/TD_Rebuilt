@@ -11,18 +11,17 @@ namespace TD_Rebuilt.Backdrop
     class Tile
     {
         private float xPos, yPos;
-        private Texture2D tileTexture;
+        private Texture2D Texture;
         private bool passable;
 
         public Tile(float _xPos, float _yPos, Texture2D _texture, bool _passable)
         {
             xPos = _xPos;
             yPos = _yPos;
-            tileTexture = _texture;
+            Texture = _texture;
             passable = _passable;
         }
-        //i * spriteSheetBackground[i, j].Width / 2.02f) + (j * spriteSheetBackground[i, j].Width / 2.02f)
-        //(i * spriteSheetBackground[i,j].Height / 2.5f) - (j * spriteSheetBackground[i,j].Height / 2.5f)
+       
         public static Tile[,] CreateTileArray(int _arraySize, Texture2D _texture)
         {
             Tile[,] tileArray = new Tile[_arraySize, _arraySize];
@@ -30,8 +29,8 @@ namespace TD_Rebuilt.Backdrop
             {
                 for (int j = tileArray.Length / _arraySize - 1; j >= 0; j--)
                 {
-                    tileArray[i, j] = new Tile((i * _texture.Width / 2.02f) + (j * _texture.Width / 2.02f),
-                        (i * _texture.Height / 2.5f) - (j * _texture.Height / 2.5f), _texture, true);
+                    tileArray[i, j] = new Tile((i * _texture.Width / 1.99f) + (j * _texture.Width / 1.99f)-500,
+                        (i * _texture.Height / 2.94f) - (j * _texture.Height / 2.94f)+200, _texture, true);
 
                 }
             }
@@ -45,7 +44,7 @@ namespace TD_Rebuilt.Backdrop
                 for (int j = _tileArray.Length / (int) Math.Sqrt(_tileArray.Length) - 1; j >= 0; j--)
                 {
                     var AT = _tileArray[i, j];
-                    _spriteBatch.Draw(AT.tileTexture, new Vector2(AT.xPos, AT.yPos), Color.White);
+                    _spriteBatch.Draw(AT.Texture, new Vector2(AT.xPos, AT.yPos), Color.White);
                 }
             }
         }

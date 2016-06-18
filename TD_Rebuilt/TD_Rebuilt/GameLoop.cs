@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Windows.Forms;
+using System.Drawing;
 using TD_Rebuilt.Backdrop;
+using TD_Rebuilt.Game_Objects;
 
 namespace TD_Rebuilt
 {
@@ -11,10 +14,16 @@ namespace TD_Rebuilt
     public class GameLoop : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D grassTexture;
+        SpriteBatch spriteBatch;        
         Tile[,] backgroundTiles;
+        private Texture2D fireTowerTexture, iceTowerTexture;
+        bool pressed;
         public GraphicsDeviceManager GraphicsProp { get { return graphics; } }
+        public static Vector2 cursorPosition
+        {
+            get { return cursorPosition; }
+            set { cursorPosition = value; }
+        }
 
         public GameLoop()
         {
@@ -45,7 +54,11 @@ namespace TD_Rebuilt
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            grassTexture = this.Content.Load<Texture2D>("Landscape/landscape21");
+            var grassTexture = this.Content.Load<Texture2D>("Landscape/landscape_28");
+            var dirtTexture = this.Content.Load<Texture2D>("Landscape/landscape_37");
+            fireTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_35");
+            iceTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_36");         
+            
             backgroundTiles = Tile.CreateTileArray(20, grassTexture);
         }
         
@@ -65,9 +78,21 @@ namespace TD_Rebuilt
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //    Exit();
+            cursorPosition = new Vector2(Cursor.Position.X, Cursor.Position.Y);
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || 
+                Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
+                Exit();
 
+            var keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T))
+                pressed = true;
+            if(keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T) && pressed)
+            {
+                pressed = false;
+                GameManager.AddTower(cursorPosition.X, cursorPosition.Y, fireTowerTexture);
+            }
+
+            GameManager.UpdateTowerPositions();
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -86,7 +111,7 @@ namespace TD_Rebuilt
             Tile.DrawTileArray(ref spriteBatch, ref backgroundTiles);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
