@@ -1,18 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TD_Rebuilt.Backdrop;
 
 namespace TD_Rebuilt
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class GameLoop : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D grassTexture;
+        Tile[,] backgroundTiles;
+        public GraphicsDeviceManager GraphicsProp { get { return graphics; } }
 
-        public Game1()
+        public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -41,8 +45,10 @@ namespace TD_Rebuilt
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            grassTexture = this.Content.Load<Texture2D>("Landscape/landscape21");
+            backgroundTiles = Tile.CreateTileArray(20, grassTexture);
         }
-
+        
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
@@ -59,8 +65,8 @@ namespace TD_Rebuilt
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //    Exit();
 
             // TODO: Add your update logic here
 
@@ -74,6 +80,10 @@ namespace TD_Rebuilt
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin();
+
+            Tile.DrawTileArray(ref spriteBatch, ref backgroundTiles);
 
             // TODO: Add your drawing code here
 
