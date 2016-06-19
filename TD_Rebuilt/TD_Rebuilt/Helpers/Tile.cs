@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace TD_Rebuilt.Backdrop
+namespace TD_Rebuilt.Helpers
 {
-    class Tile
+    public class Tile
     {
         private float xPos, yPos;
         private Texture2D Texture;
         private bool passable;
+        public Vector2 position { get { return new Vector2((int)xPos, (int)yPos); } }
 
         public Tile(float _xPos, float _yPos, Texture2D _texture, bool _passable)
         {
@@ -47,6 +48,13 @@ namespace TD_Rebuilt.Backdrop
                     _spriteBatch.Draw(AT.Texture, new Vector2(AT.xPos, AT.yPos), Color.White);
                 }
             }
+        }
+
+        public bool Contains(Vector2 _position)
+        {
+            //var bounds = new Rectangle((int)xPos, (int)yPos, Texture.Width, Texture.Height);
+            if (Texture.Bounds.Contains(_position)) { return true; }
+            else{return false;}
         }
 
     }

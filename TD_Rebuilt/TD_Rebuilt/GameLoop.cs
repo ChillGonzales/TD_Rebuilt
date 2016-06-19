@@ -3,23 +3,24 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Windows.Forms;
 using System.Drawing;
-using TD_Rebuilt.Backdrop;
+using System.Diagnostics;
+using TD_Rebuilt.Helpers;
 using TD_Rebuilt.Game_Objects;
 
 namespace TD_Rebuilt
-{
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+{    
     public class GameLoop : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;        
-        Tile[,] backgroundTiles;
+        public static Tile[,] backgroundTiles;
+        private GameManager gameManager;
         private Texture2D fireTowerTexture, iceTowerTexture;
         bool pressed;
+        public static bool boundToMouse = false;
+        public static int screenX, screenY;
         public GraphicsDeviceManager GraphicsProp { get { return graphics; } }
-        public static Vector2 cursorPosition
+        public static Vector2 cursorPosition            
         {
             get { return cursorPosition; }
             set { cursorPosition = value; }
@@ -30,24 +31,16 @@ namespace TD_Rebuilt
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+        
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
+            screenX = 200 + graphics.GraphicsDevice.Viewport.Width / 2;
+            screenY = 100 + graphics.GraphicsDevice.Viewport.Height / 2;
+            gameManager = new GameManager();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+        
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -61,56 +54,41 @@ namespace TD_Rebuilt
             
             backgroundTiles = Tile.CreateTileArray(20, grassTexture);
         }
-        
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+                
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
         protected override void Update(GameTime gameTime)
-        {
-            cursorPosition = new Vector2(Cursor.Position.X, Cursor.Position.Y);
+        {            
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || 
                 Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
                 Exit();
 
             var keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T))
-                pressed = true;
-            if(keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T) && pressed)
+            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T)) { pressed = true; }
+            if(keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.T) && pressed)
             {
                 pressed = false;
-                GameManager.AddTower(cursorPosition.X, cursorPosition.Y, fireTowerTexture);
+                boundToMouse = true;
+                GameManager.AddTower(Cursor.Position.X, Cursor.Position.Y, fireTowerTexture);                
             }
-
-            GameManager.UpdateTowerPositions();
-            // TODO: Add your update logic here
+            if (Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed) { boundToMouse = false; }
+            if (boundToMouse) { gameManager.UpdateTowerPositions(Cursor.Position.X, Cursor.Position.Y); }                 
 
             base.Update(gameTime);
         }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
 
             spriteBatch.Begin();
 
             Tile.DrawTileArray(ref spriteBatch, ref backgroundTiles);
-
-            // TODO: Add your drawing code here
+            gameManager.DrawGameObjects(ref spriteBatch);
+            
             spriteBatch.End();
             base.Draw(gameTime);
         }

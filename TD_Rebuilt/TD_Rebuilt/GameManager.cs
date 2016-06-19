@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TD_Rebuilt.Game_Objects;
+using TD_Rebuilt.Helpers;
 
 namespace TD_Rebuilt
 {
     class GameManager
     {
-        private static List<Tower> towerList = new List<Tower>();
+        protected static List<Tower> towerList = new List<Tower>();        
                    
         public GameManager()
         {
@@ -20,16 +21,16 @@ namespace TD_Rebuilt
 
         public static void AddTower(float x, float y, Texture2D texture)
         {
-            var tower = new Tower(x, y, texture);
+            var tower = new Tower(new Vector2(x - GameLoop.screenX, y - GameLoop.screenY), texture);
             towerList.Add(tower);
         }
 
-        public static void UpdateTowerPositions()
+        public void UpdateTowerPositions(int x, int y)
         {
-            foreach (var tower in towerList)
-            {
-                tower.position = GameLoop.cursorPosition;
-            }
+            var correctedPos = new Vector2(x-GameLoop.screenX, y-GameLoop.screenY);
+            //var query = from Tile item in GameLoop.backgroundTiles where item.Contains(correctedPos) select item;
+            //towerList[towerList.Count - 1].position = query.ElementAt(0).position;
+            towerList[towerList.Count - 1].position = correctedPos;
         }
 
         public void DrawGameObjects(ref SpriteBatch _spriteBatch)
