@@ -8,31 +8,38 @@ using Microsoft.Xna.Framework;
 
 namespace TD_Rebuilt.GameObjects
 {
-    public abstract class Animation
+    public class Animation
     {
-        protected Texture2D texture;
-        protected Vector2 position;
-        protected bool idle;
-        private Rectangle[] frameBoxArray;
-        private int frameIndex;
-        private double timeElapsed, timeToUpdate;        
+        //protected Texture2D texture;
+        //private Rectangle[] frameBoxArray;               
 
 
-        public Animation(Vector2 _position, Texture2D _texture)
+        //public Animation(Vector2 _position, Texture2D _texture)
+        //{
+        //    position = _position;
+        //    texture = _texture;
+        //}
+        private Rectangle[] AnimationArray;
+        private MovementDirection Name;
+        public int Length { get { return AnimationArray.Length; } }
+        public enum MovementDirection { East = 0, North = 1, Northeast = 2, Northwest = 3, South = 4, Southeast = 5, Southwest = 6, West = 7, Idle = 8 };
+
+
+        public Animation(ref Rectangle[] animationArray, MovementDirection name)
         {
-            position = _position;
-            texture = _texture;
-        }
+            AnimationArray = animationArray;
+            Name = name;
+        }        
 
-        public void CreateAnimation(int frameCount, int rowNumber, int animationIndex)
+        public static Rectangle[] CreateAnimation(ref Texture2D texture, int frameCount, int animationIndex, int spriteSheetRows)
         {
-            int frameWidth = texture.Width / frameCount;
-            timeToUpdate = 1f / frameCount;
-            frameBoxArray = new Rectangle[frameCount];
+            int frameWidth = texture.Width / frameCount;            
+            Rectangle[] frameBoxArray = new Rectangle[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
-                frameBoxArray[i] = new Rectangle(i * frameWidth, (texture.Height / animCount), animationIndex, frameWidth, texture.Height / animCount);
+                frameBoxArray[i] = new Rectangle(i * frameWidth, (texture.Height / (spriteSheetRows - 1)) * animationIndex, frameWidth, texture.Height / (spriteSheetRows - 1));
             }
+            return frameBoxArray;
         }
 
     }

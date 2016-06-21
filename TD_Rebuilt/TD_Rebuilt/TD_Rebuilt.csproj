@@ -39,6 +39,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Helpers\BaseEnemy.cs" />
+    <Compile Include="GameObjects\GruntEnemy.cs" />
     <Compile Include="Helpers\Tile.cs" />
     <Compile Include="Helpers\Animation.cs" />
     <Compile Include="GameObjects\Tower.cs" />

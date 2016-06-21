@@ -75,8 +75,9 @@ namespace TD_Rebuilt
                 GameManager.AddTower(Cursor.Position.X, Cursor.Position.Y, fireTowerTexture);                
             }
             if (Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed) { boundToMouse = false; }
-            if (boundToMouse) { gameManager.UpdateTowerPositions(Cursor.Position.X, Cursor.Position.Y); }                 
+            if (boundToMouse) { gameManager.UpdateTowerPositions(Cursor.Position.X, Cursor.Position.Y); }
 
+            gameManager.Update(gameTime);
             base.Update(gameTime);
         }
         

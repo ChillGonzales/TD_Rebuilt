@@ -12,7 +12,7 @@ namespace TD_Rebuilt
 {
     class GameManager
     {
-        protected static List<Tower> towerList = new List<Tower>();        
+        protected static List<Tower> towerList = new List<Tower>();          
                    
         public GameManager()
         {
@@ -31,6 +31,11 @@ namespace TD_Rebuilt
             //var query = from Tile item in GameLoop.backgroundTiles where item.Contains(correctedPos) select item;
             //towerList[towerList.Count - 1].position = query.ElementAt(0).position;
             towerList[towerList.Count - 1].position = correctedPos;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            
         }
 
         public void DrawGameObjects(ref SpriteBatch _spriteBatch)
