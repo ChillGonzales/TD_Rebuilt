@@ -14,12 +14,10 @@ namespace TD_Rebuilt.GameObjects
         public GruntEnemy(Texture2D Texture, Vector2 Position) : base(Texture, Position)
         {
             timeToUpdate = 1f / 10f;
+            SpriteSheetCount = 8;
+            FrameCount = 6;
             CreateAnimationList();
-        }
-        public void Draw(ref SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(Texture);
-        }
+        }        
         protected override void DrawFrame()
         {
             switch (CurrentDirection)
@@ -53,11 +51,6 @@ namespace TD_Rebuilt.GameObjects
                     Position.Y -= 0.5f;
                     break;
             }
-        }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
-        
+        }                
     }
 }

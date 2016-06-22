@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Diagnostics;
 using TD_Rebuilt.Helpers;
-using TD_Rebuilt.Game_Objects;
+using TD_Rebuilt.GameObjects;
 
 namespace TD_Rebuilt
 {    
@@ -16,6 +16,7 @@ namespace TD_Rebuilt
         public static Tile[,] backgroundTiles;
         private GameManager gameManager;
         private Texture2D fireTowerTexture, iceTowerTexture;
+        public static Texture2D EnemyTexture;
         bool pressed;
         public static bool boundToMouse = false;
         public static int screenX, screenY;
@@ -50,7 +51,8 @@ namespace TD_Rebuilt
             var grassTexture = this.Content.Load<Texture2D>("Landscape/landscape_28");
             var dirtTexture = this.Content.Load<Texture2D>("Landscape/landscape_37");
             fireTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_35");
-            iceTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_36");         
+            iceTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_36");
+            EnemyTexture = this.Content.Load<Texture2D>("Enemies/spritesheet");
             
             backgroundTiles = Tile.CreateTileArray(20, grassTexture);
         }

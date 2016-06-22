@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using TD_Rebuilt.Game_Objects;
 using TD_Rebuilt.Helpers;
+using TD_Rebuilt.GameObjects;
 
 namespace TD_Rebuilt
 {
     class GameManager
     {
-        protected static List<Tower> towerList = new List<Tower>();          
+        protected static List<Tower> towerList = new List<Tower>();
+        public GruntEnemy Enemy1;
                    
         public GameManager()
         {
-
+            Enemy1 = new GruntEnemy(GameLoop.EnemyTexture, new Vector2(250, 250));
         }
 
         public static void AddTower(float x, float y, Texture2D texture)
@@ -35,7 +36,7 @@ namespace TD_Rebuilt
 
         public void Update(GameTime gameTime)
         {
-            
+            Enemy1.Update(gameTime);
         }
 
         public void DrawGameObjects(ref SpriteBatch _spriteBatch)
@@ -44,6 +45,7 @@ namespace TD_Rebuilt
             {
                 tower.Draw(ref _spriteBatch);
             }
+            Enemy1.Draw(ref _spriteBatch);
         }
     }
 }

@@ -17,13 +17,14 @@ namespace TD_Rebuilt.GameObjects
         protected double timeElapsed;
         protected double timeToUpdate;
         protected List<Animation> AnimationList;
+        protected bool Idle;
         protected Animation.MovementDirection CurrentDirection;        
 
         protected BaseEnemy(Texture2D texture, Vector2 position)
         {
             Texture = texture;
             Position = position;
-            CurrentDirection = Animation.MovementDirection.Idle;
+            CurrentDirection = Animation.MovementDirection.East;
         }
 
         protected void ChangeDirection(Animation.MovementDirection newDirection)
@@ -31,13 +32,13 @@ namespace TD_Rebuilt.GameObjects
             CurrentDirection = newDirection;
         }
 
-        private void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
             if (timeElapsed > timeToUpdate)
             {
                 timeElapsed -= timeToUpdate;
-                if ((frameIndex < AnimationList[(int)CurrentDirection].Length - 1) && ((int)CurrentDirection != 8))
+                if ((frameIndex < AnimationList[(int)CurrentDirection].Length - 1) && !Idle)
                 {
                     frameIndex++;
                 }
@@ -50,15 +51,16 @@ namespace TD_Rebuilt.GameObjects
 
         protected abstract void DrawFrame();
 
-        protected void Draw(SpriteBatch spriteBatch)
+        public void Draw(ref SpriteBatch spriteBatch)
         {
-
+            DrawFrame();
+            spriteBatch.Draw(Texture, Position, AnimationList[(int)CurrentDirection].GetArray[frameIndex], Color.White);
         }
 
         protected void CreateAnimationList()
         {
             AnimationList = new List<Animation>();
-            for (int i = 0; i > SpriteSheetCount; i++)
+            for (int i = 0; i < SpriteSheetCount; i++)
             {
                 var animationArr = Animation.CreateAnimation(ref Texture, FrameCount, i, SpriteSheetCount);
                 var animation = new Animation(ref animationArr, (Animation.MovementDirection) i);

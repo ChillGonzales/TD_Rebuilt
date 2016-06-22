@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TD_Rebuilt.Game_Objects
+namespace TD_Rebuilt.GameObjects
 {
     class Tower
     {
