@@ -10,12 +10,13 @@ using TD_Rebuilt.Helpers;
 namespace TD_Rebuilt.GameObjects
 {
     public class GruntEnemy : BaseEnemy
-    {        
-        public GruntEnemy(Texture2D Texture, Vector2 Position) : base(Texture, Position)
+    {      
+        public GruntEnemy(Vector2 Position) : base(Position)
         {
-            timeToUpdate = 1f / 10f;
+            timeToUpdate = 1f / 8f;
             SpriteSheetCount = 8;
-            FrameCount = 6;
+            FrameCount = 8;
+            Texture = GameLoop.EnemyTexture;
             CreateAnimationList();
         }        
         protected override void DrawFrame()

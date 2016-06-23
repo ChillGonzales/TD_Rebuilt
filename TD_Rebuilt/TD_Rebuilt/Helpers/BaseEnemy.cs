@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace TD_Rebuilt.GameObjects
 {
-    public abstract class BaseEnemy
+    public abstract class BaseEnemy : IEnemy
     {
         protected Texture2D Texture;
         protected Vector2 Position;
@@ -20,9 +20,8 @@ namespace TD_Rebuilt.GameObjects
         protected bool Idle;
         protected Animation.MovementDirection CurrentDirection;        
 
-        protected BaseEnemy(Texture2D texture, Vector2 position)
-        {
-            Texture = texture;
+        protected BaseEnemy(Vector2 position)
+        {            
             Position = position;
             CurrentDirection = Animation.MovementDirection.East;
         }
@@ -32,7 +31,7 @@ namespace TD_Rebuilt.GameObjects
             CurrentDirection = newDirection;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(ref GameTime gameTime)
         {
             timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
             if (timeElapsed > timeToUpdate)

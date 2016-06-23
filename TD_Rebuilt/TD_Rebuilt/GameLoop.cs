@@ -46,8 +46,7 @@ namespace TD_Rebuilt
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            
             var grassTexture = this.Content.Load<Texture2D>("Landscape/landscape_28");
             var dirtTexture = this.Content.Load<Texture2D>("Landscape/landscape_37");
             fireTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_35");
@@ -55,7 +54,7 @@ namespace TD_Rebuilt
             EnemyTexture = this.Content.Load<Texture2D>("Enemies/spritesheet");
             
             backgroundTiles = Tile.CreateTileArray(20, grassTexture);
-        }
+        }     
                 
         protected override void UnloadContent()
         {
@@ -69,7 +68,7 @@ namespace TD_Rebuilt
                 Exit();
 
             var keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T)) { pressed = true; }
+            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T)) { pressed = true; gameManager.StartGame(); }
             if(keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.T) && pressed)
             {
                 pressed = false;
