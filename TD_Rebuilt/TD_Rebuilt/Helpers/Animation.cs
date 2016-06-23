@@ -25,7 +25,6 @@ namespace TD_Rebuilt.GameObjects
         public Rectangle[] GetArray { get { return AnimationArray; } }
         public enum MovementDirection { East = 0, North = 1, Northeast = 2, Northwest = 3, South = 4, Southeast = 5, Southwest = 6, West = 7 };
 
-
         public Animation(ref Rectangle[] animationArray, MovementDirection name)
         {
             AnimationArray = animationArray;

@@ -20,9 +20,9 @@ namespace TD_Rebuilt
         {            
         }
 
-        public static void AddTower(float x, float y, Texture2D texture)
+        public static void AddTower(float x, float y)
         {
-            var tower = new Tower(new Vector2(x - GameLoop.screenX, y - GameLoop.screenY), texture);
+            var tower = new Tower(new Vector2(x - GameLoop.screenX, y - GameLoop.screenY));
             towerList.Add(tower);
         }
 

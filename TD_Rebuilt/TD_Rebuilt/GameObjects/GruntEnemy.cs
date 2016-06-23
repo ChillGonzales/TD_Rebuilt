@@ -17,6 +17,7 @@ namespace TD_Rebuilt.GameObjects
             SpriteSheetCount = 8;
             FrameCount = 8;
             Texture = GameLoop.EnemyTexture;
+            CurrentDirection = Animation.MovementDirection.Southwest;
             CreateAnimationList();
         }        
         protected override void DrawFrame()

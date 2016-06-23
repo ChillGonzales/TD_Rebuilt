@@ -15,23 +15,21 @@ namespace TD_Rebuilt.Helpers
         int Level;
         public event WaveStartDelegate OnWaveStart;
         private bool WaveStarted = false;
+        private double timetoUpdate = 2, deltaTime;
 
         public Wave(int level)
         {
             Level = level;
-            WaveList = new List<IEnemy>();
-            for (int i = 0; i < 10; i++)
-            {
-                var enem = new GruntEnemy(new Vector2(400 - (i*50), 50));
-                WaveList.Add(enem);
-            }
+            WaveList = new List<IEnemy>();            
         }
 
         public void Begin()
         {
             if (Level == 1)
             {
-                WaveStarted = true;        
+                WaveStarted = true;
+                var enem = new GruntEnemy(new Vector2(500, 50));
+                WaveList.Add(enem);
             }
         }
 
@@ -39,6 +37,15 @@ namespace TD_Rebuilt.Helpers
         {
             if (WaveStarted)
             {
+                if (WaveList.Count < 10){
+                deltaTime += gameTime.ElapsedGameTime.TotalSeconds;
+                    if (deltaTime > timetoUpdate)
+                    {
+                        deltaTime -= timetoUpdate;
+                        deltaTime = 0;
+                        WaveList.Add(new GruntEnemy(new Vector2(500, 50)));
+                    }
+                }
                 foreach (var enem in WaveList)
                 {
                     enem.Update(ref gameTime);

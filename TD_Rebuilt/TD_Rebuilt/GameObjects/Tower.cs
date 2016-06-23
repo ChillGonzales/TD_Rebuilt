@@ -20,10 +20,10 @@ namespace TD_Rebuilt.GameObjects
         //    set { xPos = position.X; yPos = position.Y; }
         //}        
 
-        public Tower(Vector2 _position, Texture2D texture)
+        public Tower(Vector2 _position)
         {
             position = _position;
-            Texture = texture;
+            Texture = GameLoop.fireTowerTexture;
         }
 
         public void Draw(ref SpriteBatch _spriteBatch)

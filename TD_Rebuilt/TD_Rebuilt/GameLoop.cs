@@ -14,9 +14,8 @@ namespace TD_Rebuilt
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;        
         public static Tile[,] backgroundTiles;
-        private GameManager gameManager;
-        private Texture2D fireTowerTexture, iceTowerTexture;
-        public static Texture2D EnemyTexture;
+        private GameManager gameManager;        
+        public static Texture2D EnemyTexture, fireTowerTexture, iceTowerTexture, grassTexture, dirtTexture;
         bool pressed;
         public static bool boundToMouse = false;
         public static int screenX, screenY;
@@ -46,15 +45,15 @@ namespace TD_Rebuilt
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            var grassTexture = this.Content.Load<Texture2D>("Landscape/landscape_28");
-            var dirtTexture = this.Content.Load<Texture2D>("Landscape/landscape_37");
+
+            grassTexture = this.Content.Load<Texture2D>("Landscape/landscape_28");
+            dirtTexture = this.Content.Load<Texture2D>("Landscape/landscape_37");           
             fireTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_35");
             iceTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_36");
             EnemyTexture = this.Content.Load<Texture2D>("Enemies/spritesheet");
             
             backgroundTiles = Tile.CreateTileArray(20, grassTexture);
-        }     
+        }
                 
         protected override void UnloadContent()
         {
@@ -73,7 +72,7 @@ namespace TD_Rebuilt
             {
                 pressed = false;
                 boundToMouse = true;
-                GameManager.AddTower(Cursor.Position.X, Cursor.Position.Y, fireTowerTexture);                
+                GameManager.AddTower(Cursor.Position.X, Cursor.Position.Y);                
             }
             if (Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed) { boundToMouse = false; }
             if (boundToMouse) { gameManager.UpdateTowerPositions(Cursor.Position.X, Cursor.Position.Y); }
