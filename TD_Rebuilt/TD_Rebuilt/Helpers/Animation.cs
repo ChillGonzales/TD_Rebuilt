@@ -37,10 +37,10 @@ namespace TD_Rebuilt.GameObjects
             Rectangle[] frameBoxArray = new Rectangle[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
-                frameBoxArray[i] = new Rectangle(i * frameWidth, (texture.Height / (spriteSheetRows - 1)) * animationIndex, frameWidth, texture.Height / (spriteSheetRows - 1));
+                frameBoxArray[i] = new Rectangle(i * frameWidth, (texture.Height / spriteSheetRows) * animationIndex, frameWidth, texture.Height / (spriteSheetRows - 1));
             }
             return frameBoxArray;
-        }
+        }        
 
     }
 }

@@ -15,7 +15,7 @@ namespace TD_Rebuilt
         SpriteBatch spriteBatch;        
         public static Tile[,] backgroundTiles;
         private GameManager gameManager;        
-        public static Texture2D EnemyTexture, fireTowerTexture, iceTowerTexture, grassTexture, dirtTexture;
+        public static Texture2D EnemyTexture, fireTowerTexture, iceTowerTexture, grassTexture, dirtTexture, fireProjectileTexture;
         bool pressed;
         public static bool boundToMouse = false;
         public static int screenX, screenY;
@@ -51,6 +51,7 @@ namespace TD_Rebuilt
             fireTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_35");
             iceTowerTexture = this.Content.Load<Texture2D>("Buildings/tower_36");
             EnemyTexture = this.Content.Load<Texture2D>("Enemies/spritesheet");
+            fireProjectileTexture = this.Content.Load<Texture2D>("Projectiles/RedProjectile");
             
             backgroundTiles = Tile.CreateTileArray(20, grassTexture);
         }

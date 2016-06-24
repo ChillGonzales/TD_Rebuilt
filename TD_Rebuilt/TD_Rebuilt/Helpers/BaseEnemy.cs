@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TD_Rebuilt.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace TD_Rebuilt.GameObjects
 {
@@ -23,7 +24,7 @@ namespace TD_Rebuilt.GameObjects
         protected BaseEnemy(Vector2 position)
         {            
             Position = position;
-            CurrentDirection = Animation.MovementDirection.East;
+            //CurrentDirection = Animation.MovementDirection.East;
         }
 
         protected void ChangeDirection(Animation.MovementDirection newDirection)
@@ -53,7 +54,7 @@ namespace TD_Rebuilt.GameObjects
         public void Draw(ref SpriteBatch spriteBatch)
         {
             DrawFrame();
-            spriteBatch.Draw(Texture, Position, AnimationList[(int)CurrentDirection].GetArray[frameIndex], Color.White);
+            spriteBatch.Draw(Texture, Position, AnimationList[(int)CurrentDirection].GetArray[frameIndex], Color.White);            
         }
 
         protected void CreateAnimationList()
