@@ -40,7 +40,43 @@ namespace TD_Rebuilt.GameObjects
                 frameBoxArray[i] = new Rectangle(i * frameWidth, (texture.Height / spriteSheetRows) * animationIndex, frameWidth, texture.Height / (spriteSheetRows - 1));
             }
             return frameBoxArray;
-        }        
+        }
 
+        public static Vector2 Move(MovementDirection current)
+        {
+            var Position = new Vector2();
+            switch (current)
+            {
+                case Animation.MovementDirection.East:
+                    Position.X += 1;
+                    break;
+                case Animation.MovementDirection.North:
+                    Position.Y -= 1;
+                    break;
+                case Animation.MovementDirection.West:
+                    Position.X -= 1;
+                    break;
+                case Animation.MovementDirection.South:
+                    Position.Y += 1;
+                    break;
+                case Animation.MovementDirection.Southwest:
+                    Position.X -= 0.5f;
+                    Position.Y += 0.5f;
+                    break;
+                case Animation.MovementDirection.Southeast:
+                    Position.X += 0.5f;
+                    Position.Y += 0.5f;
+                    break;
+                case Animation.MovementDirection.Northwest:
+                    Position.X -= 0.5f;
+                    Position.Y -= 0.5f;
+                    break;
+                case Animation.MovementDirection.Northeast:
+                    Position.X += 0.5f;
+                    Position.Y -= 0.5f;
+                    break;
+            }
+            return Position;
+        }
     }
 }

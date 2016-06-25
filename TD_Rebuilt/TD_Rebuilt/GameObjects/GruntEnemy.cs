@@ -22,37 +22,7 @@ namespace TD_Rebuilt.GameObjects
         }        
         protected override void DrawFrame()
         {
-            switch (CurrentDirection)
-            {
-                case Animation.MovementDirection.East:
-                    Position.X += 1;
-                    break;
-                case Animation.MovementDirection.North:
-                    Position.Y -= 1;
-                    break;
-                case Animation.MovementDirection.West:
-                    Position.X -= 1;
-                    break;
-                case Animation.MovementDirection.South:
-                    Position.Y += 1;
-                    break;
-                case Animation.MovementDirection.Southwest:
-                    Position.X -= 0.5f;
-                    Position.Y += 0.5f;
-                    break;
-                case Animation.MovementDirection.Southeast:
-                    Position.X += 0.5f;
-                    Position.Y += 0.5f;
-                    break;
-                case Animation.MovementDirection.Northwest:
-                    Position.X -= 0.5f;
-                    Position.Y -= 0.5f;
-                    break;
-                case Animation.MovementDirection.Northeast:
-                    Position.X += 0.5f;
-                    Position.Y -= 0.5f;
-                    break;
-            }
+            Position += Animation.Move(CurrentDirection);
         }                
     }
 }

@@ -29,9 +29,10 @@ namespace TD_Rebuilt
         public void UpdateTowerPositions(int x, int y)
         {
             var correctedPos = new Vector2(x-GameLoop.screenX, y-GameLoop.screenY);
+            //TODO: Beginnings of a snap to grid drop system
             //var query = from Tile item in GameLoop.backgroundTiles where item.Contains(correctedPos) select item;
             //towerList[towerList.Count - 1].position = query.ElementAt(0).position;
-            towerList[towerList.Count - 1].position = correctedPos;
+            towerList[towerList.Count - 1].Position = correctedPos;
         }
 
         public void StartGame()

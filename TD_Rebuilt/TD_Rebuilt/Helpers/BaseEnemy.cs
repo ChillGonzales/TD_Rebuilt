@@ -19,7 +19,8 @@ namespace TD_Rebuilt.GameObjects
         protected double timeToUpdate;
         protected List<Animation> AnimationList;
         protected bool Idle;
-        protected Animation.MovementDirection CurrentDirection;        
+        protected Animation.MovementDirection CurrentDirection;
+        protected Rectangle HitBox;
 
         protected BaseEnemy(Vector2 position)
         {            

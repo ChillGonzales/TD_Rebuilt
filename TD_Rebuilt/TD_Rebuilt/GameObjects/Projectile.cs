@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TD_Rebuilt.Helpers;
 
 namespace TD_Rebuilt.GameObjects
 {
@@ -16,13 +17,16 @@ namespace TD_Rebuilt.GameObjects
         private List<Animation> FireAnimationList;
         private double timeElapsed, timeToUpdate;
         private Animation.MovementDirection CurrentDirection;
+        public CircleTrigger HitBox;
 
         public Projectile(Vector2 pos)
         {
             Position = pos;
             Texture = GameLoop.fireProjectileTexture;
+            timeToUpdate = 1 / 10f;
             CreateAnimationList();
-        }        
+            HitBox = new CircleTrigger(Position, Texture.Width / 2);
+        }
 
         public void Update(ref GameTime gameTime)
         {
@@ -38,48 +42,18 @@ namespace TD_Rebuilt.GameObjects
                 {
                     FrameIndex = 0;
                 }
-            }
+            }            
         }
 
         public void Draw(ref SpriteBatch spriteBatch)
         {
             DrawFrame();
-            spriteBatch.Draw()            
+            spriteBatch.Draw(Texture, FireAnimationList[(int)CurrentDirection].GetArray[FrameIndex],Color.White);           
         }
 
         protected void DrawFrame()
         {
-            switch (CurrentDirection)
-            {
-                case Animation.MovementDirection.East:
-                    Position.X += 1;
-                    break;
-                case Animation.MovementDirection.North:
-                    Position.Y -= 1;
-                    break;
-                case Animation.MovementDirection.West:
-                    Position.X -= 1;
-                    break;
-                case Animation.MovementDirection.South:
-                    Position.Y += 1;
-                    break;
-                case Animation.MovementDirection.Southwest:
-                    Position.X -= 0.5f;
-                    Position.Y += 0.5f;
-                    break;
-                case Animation.MovementDirection.Southeast:
-                    Position.X += 0.5f;
-                    Position.Y += 0.5f;
-                    break;
-                case Animation.MovementDirection.Northwest:
-                    Position.X -= 0.5f;
-                    Position.Y -= 0.5f;
-                    break;
-                case Animation.MovementDirection.Northeast:
-                    Position.X += 0.5f;
-                    Position.Y -= 0.5f;
-                    break;
-            }
+            Position += Animation.Move(CurrentDirection);
         }
 
         protected void CreateAnimationList()

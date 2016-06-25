@@ -13,7 +13,7 @@ namespace TD_Rebuilt.GameObjects
         //int xPos, yPos;
 
         public Texture2D Texture;
-        public Vector2 position;
+        public Vector2 Position;
         //public Vector2 position
         //{
         //    get { return new Vector2(xPos, yPos); }
@@ -22,13 +22,13 @@ namespace TD_Rebuilt.GameObjects
 
         public Tower(Vector2 _position)
         {
-            position = _position;
+            Position = _position;
             Texture = GameLoop.fireTowerTexture;
         }
 
         public void Draw(ref SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(Texture, position, Color.White);
+            _spriteBatch.Draw(Texture, Position, Color.White);
         }
 
 

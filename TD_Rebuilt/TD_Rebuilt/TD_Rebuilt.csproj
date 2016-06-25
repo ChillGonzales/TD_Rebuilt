@@ -42,6 +42,7 @@
     <Compile Include="GameObjects\Projectile.cs" />
     <Compile Include="Helpers\BaseEnemy.cs" />
     <Compile Include="GameObjects\GruntEnemy.cs" />
+    <Compile Include="Helpers\CircleTrigger.cs" />
     <Compile Include="Helpers\IEnemy.cs" />
     <Compile Include="Helpers\Tile.cs" />
     <Compile Include="Helpers\Animation.cs" />
