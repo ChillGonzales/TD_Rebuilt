@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace TD_Rebuilt.Helpers
 {
@@ -31,9 +32,9 @@ namespace TD_Rebuilt.Helpers
         }
 
         public void Intersects(Rectangle other)
-        {
+        {                        
             //TODO: Fire event if true
-            if (((new Vector2(other.Center.X, other.Center.Y)) - Center).Length() < (other.Width - Radius) || ((new Vector2(other.Center.X, other.Center.Y) - Center).Length() < (other.Height - Radius)))
+            if (((new Vector2(other.Center.X, other.Center.Y)) - Center).Length() < (Radius))
             {
                 OnTriggerEnter(this, new TriggerArgs(Center));                
             }            

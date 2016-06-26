@@ -33,6 +33,7 @@ namespace TD_Rebuilt
             //var query = from Tile item in GameLoop.backgroundTiles where item.Contains(correctedPos) select item;
             //towerList[towerList.Count - 1].position = query.ElementAt(0).position;
             towerList[towerList.Count - 1].Position = correctedPos;
+            towerList[towerList.Count - 1].Trigger.Center = correctedPos;
         }
 
         public void StartGame()
@@ -46,9 +47,10 @@ namespace TD_Rebuilt
         {
             if (GameStarted)
             {
-                wave.Update(ref gameTime);
+                wave.Update(ref gameTime);                
                 foreach (var Tower in towerList)
                 {
+                    Tower.Update(ref gameTime);
                     foreach (var enem in wave.WaveList)
                     {
                         //Will fire event if enemy is within tower trigger

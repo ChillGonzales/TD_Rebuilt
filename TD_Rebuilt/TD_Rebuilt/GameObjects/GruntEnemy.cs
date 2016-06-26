@@ -18,11 +18,14 @@ namespace TD_Rebuilt.GameObjects
             FrameCount = 8;
             Texture = GameLoop.EnemyTexture;
             CurrentDirection = Animation.MovementDirection.Southwest;
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
             CreateAnimationList();
         }        
         protected override void DrawFrame()
         {
             Position += Animation.Move(CurrentDirection);
+            HitBox.X = (int)Position.X;
+            HitBox.Y = (int)Position.Y;
         }                
     }
 }

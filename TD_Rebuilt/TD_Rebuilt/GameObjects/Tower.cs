@@ -17,7 +17,10 @@ namespace TD_Rebuilt.GameObjects
         public Texture2D Texture;
         public Vector2 Position;
         public CircleTrigger Trigger;
-        public List<Projectile> ProjectileList;        
+        public List<Projectile> ProjectileList;
+        private bool EnemyPresent;
+        private double timeElapsed, timeToUpdate;
+        private Vector2 CurrentEnemy;
         //public Vector2 position
         //{
         //    get { return new Vector2(xPos, yPos); }
@@ -28,9 +31,20 @@ namespace TD_Rebuilt.GameObjects
         {
             Position = _position;
             Texture = GameLoop.fireTowerTexture;
-            Trigger = new CircleTrigger(Position, 400);
+            Trigger = new CircleTrigger(Position, 250);
             Trigger.OnTriggerEnter += new TriggerDelegate(OnTriggerEnter);
             ProjectileList = new List<Projectile>();
+            timeToUpdate = 1/2;
+        }
+
+        public void Update(ref GameTime gameTime)
+        {
+            timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeElapsed > timeToUpdate)
+            {
+                timeElapsed -= timeToUpdate;
+                if (EnemyPresent) { FireAtTarget(); }
+            }
         }
 
         public void Draw(ref SpriteBatch _spriteBatch)
@@ -45,9 +59,15 @@ namespace TD_Rebuilt.GameObjects
         private void OnTriggerEnter(object sender, TriggerArgs e)
         {
             Debug.Print("FIRE!!!!");
-            var proj = new Projectile(this.Position, e.OtherPos());
+            EnemyPresent = true;
+            CurrentEnemy = e.OtherPos();
+        }
+
+        private void FireAtTarget()
+        {
+            var proj = new Projectile(this.Position, CurrentEnemy);
             ProjectileList.Add(proj);
-        }       
+        }
 
 
     }
