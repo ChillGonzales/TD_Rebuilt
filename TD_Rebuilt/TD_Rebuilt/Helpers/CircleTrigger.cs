@@ -12,7 +12,7 @@ namespace TD_Rebuilt.Helpers
     {
         public Vector2 Center { get; set; }
         public float Radius { get; set; }
-        //public event TriggerDelegate OnTriggerEnter;
+        public event TriggerDelegate OnTriggerEnter;
 
         public CircleTrigger(Vector2 center, float radius)
             : this()
@@ -21,40 +21,45 @@ namespace TD_Rebuilt.Helpers
             Radius = radius;
         }
 
-        public bool Contains(Vector2 point)
+        public void Contains(Vector2 point)
         {
             if ((point - Center).Length() <= Radius)
             {
                 //TODO: Fire Event
-                return true;
-            }
-            else { return false; }
+                OnTriggerEnter(this, new TriggerArgs(new Vector2(point.X, point.Y)));                
+            }            
         }
 
-        public bool Intersects(Rectangle other)
+        public void Intersects(Rectangle other)
         {
             //TODO: Fire event if true
-            return ((new Vector2(other.Center.X, other.Center.Y)) - Center).Length() < (other.Width - Radius) || ((new Vector2(other.Center.X, other.Center.Y) - Center).Length() < (other.Height - Radius));
+            if (((new Vector2(other.Center.X, other.Center.Y)) - Center).Length() < (other.Width - Radius) || ((new Vector2(other.Center.X, other.Center.Y) - Center).Length() < (other.Height - Radius)))
+            {
+                OnTriggerEnter(this, new TriggerArgs(Center));                
+            }            
         }
 
-        public bool Intersects(CircleTrigger other)
+        public void Intersects(CircleTrigger other)
         {
-            return ((other.Center) - Center).Length() < (other.Radius - Radius);
+            if (((other.Center) - Center).Length() < (other.Radius - Radius))
+            {
+                OnTriggerEnter(this, new TriggerArgs(other.Center));                
+            }            
         }
     }
 
-    //public delegate void TriggerDelegate(object sender, TriggerArgs e);
+    public delegate void TriggerDelegate(object sender, TriggerArgs e);
 
-    //public class TriggerArgs : EventArgs
-    //{
-    //    private int Trigger;
-    //    public TriggerArgs(int enemycount)
-    //    {
-    //        EnemyNum = enemycount;
-    //    }
-    //    public int EnemyCount()
-    //    {
-    //        return EnemyNum;
-    //    }
-    //}
+    public class TriggerArgs : EventArgs
+    {
+        private Vector2 OtherPosition;
+        public TriggerArgs(Vector2 otherPos)
+        {
+            OtherPosition = otherPos;
+        }
+        public Vector2 OtherPos()
+        {
+            return OtherPosition;
+        }
+    }
 }

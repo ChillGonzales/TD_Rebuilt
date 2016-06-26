@@ -8,8 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TD_Rebuilt.Helpers
 {
-    interface IEnemy
+    public interface IEnemy
     {
+        Rectangle HurtBox{ get; }
         void Draw(ref SpriteBatch spriteBatch);
         void Update(ref GameTime gameTime);
     }

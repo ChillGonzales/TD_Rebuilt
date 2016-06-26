@@ -47,6 +47,14 @@ namespace TD_Rebuilt
             if (GameStarted)
             {
                 wave.Update(ref gameTime);
+                foreach (var Tower in towerList)
+                {
+                    foreach (var enem in wave.WaveList)
+                    {
+                        //Will fire event if enemy is within tower trigger
+                        Tower.Trigger.Intersects(enem.HurtBox);
+                    }
+                }
             }
         }
 

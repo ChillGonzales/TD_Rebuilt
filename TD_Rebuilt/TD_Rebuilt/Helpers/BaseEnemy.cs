@@ -20,11 +20,13 @@ namespace TD_Rebuilt.GameObjects
         protected List<Animation> AnimationList;
         protected bool Idle;
         protected Animation.MovementDirection CurrentDirection;
-        protected Rectangle HitBox;
+        private Rectangle HitBox;
+        public Rectangle HurtBox { get { return HitBox; } }
 
         protected BaseEnemy(Vector2 position)
         {            
             Position = position;
+            HitBox = new Rectangle(Position.X, Position.Y, Texture.Width, Texture.Height);
             //CurrentDirection = Animation.MovementDirection.East;
         }
 

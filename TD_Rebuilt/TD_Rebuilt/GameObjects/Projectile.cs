@@ -11,7 +11,7 @@ namespace TD_Rebuilt.GameObjects
 {
     public class Projectile
     {
-        private Vector2 Position;
+        private Vector2 Position, CurrentTarget;
         private Texture2D Texture;
         private int FrameCount = 6, FrameIndex = 0;
         private List<Animation> FireAnimationList;
@@ -19,12 +19,13 @@ namespace TD_Rebuilt.GameObjects
         private Animation.MovementDirection CurrentDirection;
         public CircleTrigger HitBox;
 
-        public Projectile(Vector2 pos)
+        public Projectile(Vector2 pos, Vector2 TargetPosition)
         {
             Position = pos;
             Texture = GameLoop.fireProjectileTexture;
             timeToUpdate = 1 / 10f;
             CreateAnimationList();
+            CurrentTarget = TargetPosition;
             HitBox = new CircleTrigger(Position, Texture.Width / 2);
         }
 
@@ -53,8 +54,10 @@ namespace TD_Rebuilt.GameObjects
 
         protected void DrawFrame()
         {
-            Position += Animation.Move(CurrentDirection);
-        }
+            //Position += Animation.Move(CurrentDirection);
+            var distanceToTarget = new Vector2(CurrentTarget.X - this.Position.X, CurrentTarget.Y - this.Position.Y);
+            Position += distanceToTarget / 50;
+        }       
 
         protected void CreateAnimationList()
         {

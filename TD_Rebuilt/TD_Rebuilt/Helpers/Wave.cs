@@ -11,7 +11,7 @@ namespace TD_Rebuilt.Helpers
 {
     public class Wave
     {
-        List<IEnemy> WaveList;
+        public List<IEnemy> WaveList;
         int Level;
         public event WaveStartDelegate OnWaveStart;
         private bool WaveStarted = false;
